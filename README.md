@@ -1,6 +1,6 @@
 # AE_video_maker
 
-I'm trying to build a script that make YouTube short format videos. 
+## I'm trying to build a script that make YouTube short format videos. 
 
 **Here are some useful links that could help:**
 * _https://ae-scripting.docsforadobe.dev/_ 
