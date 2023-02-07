@@ -1,0 +1,19 @@
+{
+  "name": "ae_video_maker",
+  "version": "1.0.0",
+  "description": "A script that build video ",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bouterfass/AE_video_maker.git"
+  },
+  "author": "Youcef Bouterfass",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Bouterfass/AE_video_maker/issues"
+  },
+  "homepage": "https://github.com/Bouterfass/AE_video_maker#readme"
+}
