@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "A script that build video ",
   "main": "app.js",
+  "type": "module",
   "scripts": {
+    "start": "afterfx -r app.jsx",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +17,10 @@
   "bugs": {
     "url": "https://github.com/Bouterfass/AE_video_maker/issues"
   },
-  "homepage": "https://github.com/Bouterfass/AE_video_maker#readme"
+  "homepage": "https://github.com/Bouterfass/AE_video_maker#readme",
+  "dependencies": {
+    "got": "^12.5.3",
+    "jsdom": "^21.1.0",
+    "node-fetch": "^2.6.9"
+  }
 }
