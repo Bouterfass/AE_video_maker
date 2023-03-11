@@ -3,7 +3,7 @@ import jsdom from 'jsdom';
 const { JSDOM } = jsdom;
 import fs from 'fs';
 
-let word = JSON.parse(fs.readFileSync('quotes.json'));
+let word = JSON.parse(fs.readFileSync('../quotes.json'));
 console.log(word);
 let url = "https://www.lalanguefrancaise.com/articles/citations-amour-francais";
 let jsonCollection;
@@ -44,12 +44,19 @@ let jsonCollection;
         word.push({ quote: quote?.replace("&nbsp;", " "), author: author?.replace("&nbsp;", " "), theme: "amour" });
     })
 
-    //   jsonCollection = JSON.stringify(word);
+      jsonCollection = JSON.stringify(word);
   
-    //   fs.writeFile(`quotes.json`, jsonCollection, err =>{
-    //       if (err)
-    //           console.log("An error occured");
-    //       else 
-    //           console.log("Your file has been created.");
-    //   })
+      fs.writeFile(`quotes.json`, jsonCollection, err =>{
+          if (err)
+              console.log("An error occured");
+          else 
+              console.log("Your file has been created.");
+      })
 })();
+
+
+/*
+
+Ne pas oublier de retirer toutes les erreurs à la fin du fichier
+
+*/
