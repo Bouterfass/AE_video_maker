@@ -12,24 +12,23 @@ function createLayers(type, nbLayers, comp) {
 
 function setPositionLayer(layers, time) {
 
-    var position = 0;
-    var interval = array.length / time;
+    var interval = time / layers.length;
 
     for (var i = 0; i < layers.length; i++) {
-        layers[i].start_time = position;
-        position += interval;
+        layers[i].startTime = i * interval;
+        layers[i].outPoint = layers[i].startTime + interval
     }
 }
 
 function setTimeLayer(layers, time) {
 
     for (var i = 0; i < layers.length; i++) {
-        layers[i].time = time / layers.length;
+        layers[i].duration = time / layers.length;
     }
 }
 
 
-const videoLength = 61;
+var videoLength = 61;
 
 var comp = app.project.items.addComp("Composition", 1080, 1920, 1, videoLength, 29.97);
 
