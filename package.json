@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Bouterfass/AE_video_maker#readme",
   "dependencies": {
+    "fluent-ffmpeg": "^2.1.2",
     "got": "^12.5.3",
     "jsdom": "^21.1.0",
     "node-fetch": "^2.6.9"

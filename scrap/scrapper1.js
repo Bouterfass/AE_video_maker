@@ -3,7 +3,7 @@ import jsdom from 'jsdom';
 const { JSDOM } = jsdom;
 import fs from 'fs';
 
-let word = JSON.parse(fs.readFileSync('../quotes.json'));
+let word = JSON.parse(fs.readFileSync('./quotes.json'));
 console.log(word);
 let url = "https://www.lalanguefrancaise.com/articles/citations-amour-francais";
 let jsonCollection;
