@@ -4,10 +4,10 @@ var settingsFile = new File("./settings/settings.txt"); // Remplacez "chemin_ver
 if (settingsFile.open("r")) {
     var quotesList = [];
     var currentQuote = "";
-    
+
     while (!settingsFile.eof) {
         var line = settingsFile.readln();
-        
+
         if (line === "") {
             // Une ligne vide signifie une nouvelle citation
             if (currentQuote !== "") {
@@ -19,27 +19,25 @@ if (settingsFile.open("r")) {
             currentQuote += line + "\n";
         }
     }
-    
+
     settingsFile.close();
 }
 /* FILES */
 
-var music = new File("../files/musics/takemeinyourarms.mp3");
-var backgroundImage = new File("../files/backgrounds/sunset.jpg");
-//var backgroundVideo = new File("../files/backgrounds/night1.mp4");
-
+var music = new File("../files/musics/tmiyan.mp3");
+var backgroundImage = new File("../files/backgrounds/hawaiinew.mp4");
 
 /* END FILES */
 /* FUNCTIONS */
 
 function createIntroLayer(comp) {
 
-    var textLayer = comp.layers.addText("Mon Texte");
+    var textLayer = comp.layers.addText("");
     var textProp = textLayer.property("ADBE Text Properties").property("ADBE Text Document");
     textDoc = textProp.value;
 
     var textRect = textLayer.sourceRectAtTime(0, false);
-   
+
     var middleTextY = (comp.height + textRect.height) / 2;
     var middleTextX = (comp.width - textRect.width) / 2;
     textLayer.position.setValue([middleTextX, middleTextY]);
@@ -50,45 +48,79 @@ function createIntroLayer(comp) {
 function createLayers(type, nbLayers, comp) {
 
     var layers = [];
-    
     var textLayer;
 
-    for (var i = 0; i <= nbLayers; i++) {
-        
-        textLayer = comp.layers.addText(quotesList[3]);
+    var maxWidth = 1080; // Largeur maximale souhaitée
+
+    for (var i = 0; i < nbLayers; i++) {
+        var quote = quotesList[i];
+        var lines = [];
+        var currentLine = '';
+        var words = quote.split(' ');
+
+        for (var j = 0; j < words.length; j++) {
+            var testLine = currentLine + (currentLine === '' ? '' : ' ') + words[j];
+            var testTextLayer = comp.layers.addText(testLine);
+            var testSourceRect = testTextLayer.sourceRectAtTime(0, false);
+            testTextLayer.remove();
+
+            if (testSourceRect.width > maxWidth) {
+                lines.push(currentLine);
+                currentLine = words[j];
+            } else {
+                currentLine = testLine;
+            }
+        }
+
+        if (currentLine !== '') {
+            lines.push(currentLine);
+        }
+
+        var text = lines.join('\n');
+        textLayer = comp.layers.addText(text);
+
+        // Configurez les propriétés du texte (couleur, taille, etc.)
+        layers.push(textLayer);
+
         var textProp = textLayer.property("ADBE Text Properties").property("ADBE Text Document");
-        textDoc = textProp.value;
+        var textDoc = textProp.value;
         textDoc.applyStroke = true;
-        textDoc.fontSize = 80;
+        textDoc.fontSize = 75;
         textDoc.italic = true;
         textDoc.fillColor = [1, 1, 1];
         textDoc.strokeColor = [0, 0, 0];
         textDoc.strokeWidth = 1;
         textProp.setValue(textDoc);
-        layers.push(textLayer)
-        
-        var totalTextHeight = textDoc.fontSize * textDoc.text.split("\n").length;
-        var middleTextY = (comp.height - totalTextHeight) / 2;
-        var textRect = textLayer.sourceRectAtTime(0, false);
 
-        var middleTextX = (comp.width - textRect.width) / 2;
+
+        // Centrez le texte dans le cadre
+        var textRect = textLayer.sourceRectAtTime(0, false);
+        var middleTextX = comp.width / 2 - textRect.width / 2;
+        var middleTextY = comp.height / 2 - textRect.height / 2;
         textLayer.position.setValue([middleTextX, middleTextY]);
     }
     return layers;
 }
 
-function changeTextStyle(layersArray) {
-    // Parcours toutes les couches du tableau
-    for (var i = 1; i < layersArray.length; i++) {
-      var currentLayer = layersArray[i];
-      // Vérifie si la couche est une couche de texte
-      if (currentLayer instanceof TextLayer) {
-        // Changer le style du texte
-        
-      }
+
+function fadeInOut(layer, duration) {
+    layer.opacity.setValueAtTime(0, 0); // Opacité initiale à 0
+    layer.opacity.setValueAtTime(duration / 12, 100); // Opacité maximale au milieu de la transition
+    layer.opacity.setValueAtTime(duration - (duration / 12), 100); // Opacité de retour à 0 à la fin de la transition
+    layer.opacity.setValueAtTime(duration, 0);
+}
+
+function layerTransition(quotes, videoLength) {
+
+   
+    for (var i = 0; i < quotes.length; i++) {
+        var quote = quotes[i];
+        var transitionDuration = videoLength / quotes.length;; // Durée de la transition en secondes (personnalisez selon vos besoins)
+        fadeInOut(quote, transitionDuration);
     }
-  }
-  
+
+}
+
 
 function setPositionLayer(layers, time, introLayer) {
 
@@ -112,10 +144,9 @@ function setTimeLayer(layers, time) {
     }
 }
 
-
 /* END FUNCTIONS*/
 
-var videoLength = 61;
+var videoLength = quotesList.length * 5;
 
 var comp = app.project.items.addComp("Composition", 1080, 1920, 1, videoLength, 29.97);
 var importedMusic = app.project.importFile(new ImportOptions(music));
@@ -123,30 +154,36 @@ var importedBackground = app.project.importFile(new ImportOptions(backgroundImag
 
 //var videoComp = app.project.items.addComp("Video Comp", 1080, 1920, 1, videoLength, 29.97);
 var backgroundLayer = comp.layers.add(importedBackground);
-//var videoLayer = videoComp.layers.add(importedBackground);
 
-// var nbDuplication = Math.ceil(videoLength / videoLayer.source.duration);
-// for (var i = 1; i < nbDuplication; i++) {
-//     videoLayer.duplicate();
-// }
+var sign = comp.layers.addText("@anhedonia");
+sign.outPoint = comp.duration;
+sign.position.setValue([10, 1200]);
 
-// var offset = 0;
-// for (var i = 1; i <= videoComp.layers.length; i++) {
-//     var currentLayer = videoComp.layers[i];
-//     currentLayer.startTime = offset;
-//     offset += currentLayer.source.duration;
-// }
 
-// var backgroundVideoLayer = comp.layers.add(videoComp);
-// backgroundVideoLayer.startTime = 0;
-// backgroundVideoLayer.outPoint = videoLength;
+if (sign instanceof TextLayer) {
+    var textProperties = sign.property("ADBE Text Properties").property("ADBE Text Document");
+    var textDocument = textProperties.value;
 
-//backgroundVideoLayer.moveToEnd(); 
+    // Changez le style du texte
+    textDocument.font = "Helvetica Neue"; // Changer la police
+    textDocument.fontSize = 60; // Changer la taille de la police
+    textDocument.fillColor = [1, 1, 1]; // Changer la couleur de remplissage en blanc (1, 1, 1 correspond au blanc)
+    textDocument.strokeColor = [0, 0, 0]; // Changer la couleur du contour en noir
+    textDocument.strokeWidth = 1; // Changer la largeur du contour
+
+    textDocument.italic = true; // Mettre en italique
+    textProperties.setValue(textDocument);
+
+    var newPositionX = sign.position.value[0] + 80; // Décalage horizontal de 50 pixels
+    var newPositionY = sign.position.value[1] - 750; // Décalage vertical de 100 pixels
+    sign.position.setValue([newPositionX, newPositionY]);
+
+}
 
 var quotes = [];
 var authors = [];
 
-quotes = createLayers("quote number", 10, comp);
+quotes = createLayers("quote number", quotesList.length, comp);
 //authors = createLayers("author", 10, comp);
 
 var introLayer = createIntroLayer(comp);
@@ -157,12 +194,10 @@ var introLayer = createIntroLayer(comp);
 setTimeLayer(quotes, videoLength);
 //setTimeLayer(authors, videoLength);
 
+layerTransition(quotes, videoLength);
+
 setPositionLayer(quotes, videoLength, introLayer);
 //setPositionLayer(authors, videoLength, introLayer);
-
-
-
-changeTextStyle(comp.layers);
 
 /* SET MUSIC */
 comp.layers.add(importedMusic);
