@@ -1,26 +1,30 @@
-une premiere citati on sdsd sss sss sssss sss sss sssss sss ssss ssssss ssss ssss sss
+Ceux qui vivent, ce sont ceux qui luttent.
 
-la vie c'est dure
+Tu ne sais à quel point tu es fort jusqu'au jour où être fort est la seule option.
 
-prout prout
+Si vos rêves ne vous font pas peur, c'est qu'ils ne sont pas assez grand.
 
-la go la c ptet une fille bien mais moi jprefere les tchoin tchoin txhoin
+Vous qui pénétrez dans mon coeur, ne faites pas attention au désordre.
 
-fdgfsdgfdgfdgfdgfsgdf
-go
+Si un jour ce rêve se termine, j'irai te rejoindre dans un autre.
 
+La vie, c'est ce qu'il vous arrive quand vous étiez en train de prévoir autre chose.
 
-fdgdfgdfgfdgsdfgsdf
+Je suis d'une sensibilité absurde, ce qui érafle les autres me déchire.
 
-fdgsfdgfdsgdfsgdfsg
+Il y a des êtres qui justifient le monde,
+qui aident à vivre par le seule présence.
 
+Nous souffrons plus souvent dans l'imagination que dans la réalité.
 
-fdgsfdgfdsgfsdgdfsgdfs
+Aucun n'est homme libre s'il n'est maître de lui-même.
 
-gfdgsdfgsfdg
+Une erreur répétée plusieurs fois est une décision.
 
-gfdgsdfgsfdhgfsghgfdgfdsgfd
+scene: hawaii
 
-background: hawaiinew
+song: tmiya
 
-music: tmiyan
+st_background: 00:00:16
+
+st_music: 00:00:16

@@ -14,12 +14,12 @@ if (settingsFile.open("r")) {
                 quotesList.push(currentQuote);
                 currentQuote = "";
             }
-        }else if (line.indexOf("background: ") !== -1) {
+        } else if (line.indexOf("scene: ") !== -1) {
             // Extraire le nom du fichier MP4
-            videoFile = line.replace("background: ", "");
-        } else if (line.indexOf("music: ") !== -1) {
+            videoFile = line.replace("scene: ", "");
+        } else if (line.indexOf("song: ") !== -1) {
             // Extraire le nom du fichier MP3
-            musicFile = line.replace("music: ", "");
+            musicFile = line.replace("song: ", "");
         } else {
             // Ajouter la ligne à la citation actuelle
             currentQuote += line + "\n";
@@ -30,8 +30,8 @@ if (settingsFile.open("r")) {
 }
 /* FILES */
 
-var music = new File("../files/musics/"+ musicFile +".mp3");
-var backgroundImage = new File("../files/backgrounds/"+ videoFile +".mp4");
+var music = new File("../files/edited/musics/" + musicFile + "_edited.mp3");
+var backgroundImage = new File("../files/edited/backgrounds/" + videoFile + "_edited.mp4");
 
 /* END FILES */
 /* FUNCTIONS */
@@ -55,6 +55,7 @@ function createLayers(type, nbLayers, comp) {
 
     var layers = [];
     var textLayer;
+    var shapeLayer;
 
     var maxWidth = 1080; // Largeur maximale souhaitée
 
@@ -84,20 +85,18 @@ function createLayers(type, nbLayers, comp) {
 
         var text = lines.join('\n');
         textLayer = comp.layers.addText(text);
-
-        // Configurez les propriétés du texte (couleur, taille, etc.)
+      
         layers.push(textLayer);
 
         var textProp = textLayer.property("ADBE Text Properties").property("ADBE Text Document");
         var textDoc = textProp.value;
         textDoc.applyStroke = true;
-        textDoc.fontSize = 75;
+        textDoc.fontSize = 60;
         textDoc.italic = true;
         textDoc.fillColor = [1, 1, 1];
         textDoc.strokeColor = [0, 0, 0];
         textDoc.strokeWidth = 1;
         textProp.setValue(textDoc);
-
 
         // Centrez le texte dans le cadre
         var textRect = textLayer.sourceRectAtTime(0, false);
@@ -118,7 +117,7 @@ function fadeInOut(layer, duration) {
 
 function layerTransition(quotes, videoLength) {
 
-   
+
     for (var i = 0; i < quotes.length; i++) {
         var quote = quotes[i];
         var transitionDuration = videoLength / quotes.length;; // Durée de la transition en secondes (personnalisez selon vos besoins)
@@ -161,7 +160,7 @@ var importedBackground = app.project.importFile(new ImportOptions(backgroundImag
 //var videoComp = app.project.items.addComp("Video Comp", 1080, 1920, 1, videoLength, 29.97);
 var backgroundLayer = comp.layers.add(importedBackground);
 
-var sign = comp.layers.addText("@anhedonia");
+var sign = comp.layers.addText("@haestheticus");
 sign.outPoint = comp.duration;
 sign.position.setValue([10, 1200]);
 
