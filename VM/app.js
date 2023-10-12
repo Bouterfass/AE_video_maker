@@ -14,6 +14,12 @@ if (settingsFile.open("r")) {
                 quotesList.push(currentQuote);
                 currentQuote = "";
             }
+        }else if (line.indexOf("background: ") !== -1) {
+            // Extraire le nom du fichier MP4
+            videoFile = line.replace("background: ", "");
+        } else if (line.indexOf("music: ") !== -1) {
+            // Extraire le nom du fichier MP3
+            musicFile = line.replace("music: ", "");
         } else {
             // Ajouter la ligne à la citation actuelle
             currentQuote += line + "\n";
@@ -24,8 +30,8 @@ if (settingsFile.open("r")) {
 }
 /* FILES */
 
-var music = new File("../files/musics/tmiyan.mp3");
-var backgroundImage = new File("../files/backgrounds/hawaiinew.mp4");
+var music = new File("../files/musics/"+ musicFile +".mp3");
+var backgroundImage = new File("../files/backgrounds/"+ videoFile +".mp4");
 
 /* END FILES */
 /* FUNCTIONS */

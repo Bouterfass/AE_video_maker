@@ -20,3 +20,7 @@ fdgsfdgfdsgfsdgdfsgdfs
 gfdgsdfgsfdg
 
 gfdgsdfgsfdhgfsghgfdgfdsgfd
+
+background: hawaiinew
+
+music: tmiyan
